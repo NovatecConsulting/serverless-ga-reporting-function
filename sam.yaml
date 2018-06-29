@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: AWS Serverless Google Analytics Reporting - de.novatec.aqe::serverless-ga-reporting-function
+Resources:
+  ServerlessGAReportingFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: ServerlessGAReportingFunction
+      Handler: de.novatec.aqe.HelloAnalytics::handleRequest
+      Runtime: java8
+      CodeUri: target/serverless-ga-reporting-function-1.0-SNAPSHOT.jar
+      MemorySize: 1024
+      Role: arn:aws:iam::292384238617:role/lambda_basic_execution
+      Timeout: 30
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+
+Outputs:
+  ServerlessGAReportingApi:
+    Description: URL for application
+    Value: !Sub 'https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/GA'
+    Export:
+      Name: ServerlessGAReportingApi
