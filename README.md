@@ -1,0 +1,1 @@
+# serverless-ga-reporting-function
